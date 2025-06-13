@@ -53,7 +53,7 @@ jobs:
           coscli sync \
             --thread-num 8 \
             --recursive \
-            cos://${{ secrets.COS_BUCKET }}/obsidian/0.数字花园/ \
+            cos://${{ secrets.COS_BUCKET }}/0.数字花园/ \
             content/ \
             -e cos.${{ secrets.COS_REGION }}.myqcloud.com
             
