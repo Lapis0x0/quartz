@@ -28,20 +28,40 @@ jobs:
           bucket:      ${{ secrets.COS_BUCKET }}      # mybucket-1234567890
           coscli-version: 'v0.12.0-beta'             # 指定具体版本号而非 latest
 
-      # 3️⃣ 从 COS 下载到本地 content/（保持完全一致）
+      # 3️⃣ 从 COS 下载到本地 content/（保持完全一致，但保留 .gitkeep）
       - name: 拉取 COS 文件到 content/
         run: |
-          # 清空并重新创建 content 目录以实现相同的效果
+          # 您自定义的重要文件，需要备份和恢复
+          mkdir -p /tmp/content_backup
+          if [ -f "content/.gitkeep" ]; then
+            cp content/.gitkeep /tmp/content_backup/
+          fi
+          
+          # 清空并重新创建 content 目录
           rm -rf content
           mkdir -p content
+          
+          # 恢复重要文件
+          if [ -f "/tmp/content_backup/.gitkeep" ]; then
+            cp /tmp/content_backup/.gitkeep content/
+          else
+            # 如果不存在，创建一个空的 .gitkeep 文件
+            touch content/.gitkeep
+          fi
           
           # 执行同步，使用递归模式
           coscli sync \
             --thread-num 8 \
             --recursive \
-            cos://${{ secrets.COS_BUCKET }}/obsidian/数字花园/ \
+            cos://${{ secrets.COS_BUCKET }}/obsidian/0.数字花园/ \
             content/ \
             -e cos.${{ secrets.COS_REGION }}.myqcloud.com
+            
+          # 确保 .gitkeep 在同步后仍然存在
+          if [ ! -f "content/.gitkeep" ]; then
+            touch content/.gitkeep
+          fi
+          
           echo "COS 同步完成 ✅"
 
       # 4️⃣ 若有变动就提交
