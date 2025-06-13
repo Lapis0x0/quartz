@@ -1,0 +1,58 @@
+name: 同步COS到Obsidian仓库
+
+on:
+  # 每 6 小时自动同步一次（UTC 时间）
+  schedule:
+    - cron: '0 */6 * * *'
+  # 允许手动触发
+  workflow_dispatch:
+
+jobs:
+  sync-from-cos:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1️⃣ 拉取代码
+      - name: 检出仓库
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1     # 只拉取最新提交即可，速度更快
+
+      # 2️⃣ 安装并配置 coscli（官方 CLI，支持 sync）
+      - name: 安装并配置 coscli
+        uses: git9527/setup-coscli@v2
+        with:
+          region:      ${{ secrets.COS_REGION }}      # ap-shanghai 等
+          secret-id:   ${{ secrets.COS_SECRET_ID }}
+          secret-key:  ${{ secrets.COS_SECRET_KEY }}
+          bucket:      ${{ secrets.COS_BUCKET }}      # mybucket-1234567890
+          coscli-version: 'latest'
+
+      # 3️⃣ 从 COS 下载到本地 content/（--delete 保持完全一致）
+      - name: 拉取 COS 文件到 content/
+        run: |
+          mkdir -p content
+          coscli sync \
+            --thread-num 8 \
+            --delete \
+            cos://${{ secrets.COS_BUCKET }}/obsidian/数字花园 \
+            content/ \
+            -e cos.${{ secrets.COS_REGION }}.myqcloud.com
+          echo "COS 同步完成 ✅"
+
+      # 4️⃣ 若有变动就提交
+      - name: Commit & push if changed
+        env:
+          TZ: Asia/Shanghai
+        run: |
+          git config user.name  "COS Sync Bot"
+          git config user.email "bot@users.noreply.github.com"
+
+          if [[ -n $(git status --porcelain) ]]; then
+            git add -A
+            git commit -m "chore: sync notes from COS $(date '+%Y-%m-%d %H:%M:%S')"
+            git push
+            echo "已检测到变动并推送 🚀"
+          else
+            echo "没有文件变化，跳过提交 ✔"
+          fi
