@@ -16,3 +16,21 @@ li strong {
 * strong {
   color: #ff4d8b !important;
 }
+
+// 修改链接元素的主题色
+a {
+  color: #9370DB !important; // 紫色系主题色
+  
+  &:hover {
+    color: #BA55D3 !important; // 悬停时的颜色，更深的紫色
+  }
+}
+
+// 修改文件夹标题的颜色
+.folder-title {
+  color: #9370DB !important; // 与链接保持一致的颜色
+  
+  &:hover {
+    color: #BA55D3 !important; // 悬停时的颜色
+  }
+}
