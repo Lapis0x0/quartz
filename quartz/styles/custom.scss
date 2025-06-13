@@ -1,3 +1,18 @@
 @use "./base.scss";
 
 // put your custom CSS here!
+
+// 修改所有加粗文本的颜色
+strong {
+  color: #ff4d8b !important; // 更鲜艳的火鹤红，使用!important确保覆盖所有样式
+}
+
+// 确保列表项中的加粗文本也能被覆盖
+li strong {
+  color: #ff4d8b !important;
+}
+
+// 确保其他可能的嵌套情况也能被覆盖
+* strong {
+  color: #ff4d8b !important;
+}
