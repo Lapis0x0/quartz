@@ -28,14 +28,18 @@ jobs:
           bucket:      ${{ secrets.COS_BUCKET }}      # mybucket-1234567890
           coscli-version: 'v0.12.0-beta'             # 指定具体版本号而非 latest
 
-      # 3️⃣ 从 COS 下载到本地 content/（--delete 保持完全一致）
+      # 3️⃣ 从 COS 下载到本地 content/（保持完全一致）
       - name: 拉取 COS 文件到 content/
         run: |
+          # 清空并重新创建 content 目录以实现相同的效果
+          rm -rf content
           mkdir -p content
+          
+          # 执行同步，使用递归模式
           coscli sync \
             --thread-num 8 \
-            --delete \
-            cos://${{ secrets.COS_BUCKET }}/obsidian/数字花园 \
+            --recursive \
+            cos://${{ secrets.COS_BUCKET }}/obsidian/数字花园/ \
             content/ \
             -e cos.${{ secrets.COS_REGION }}.myqcloud.com
           echo "COS 同步完成 ✅"
