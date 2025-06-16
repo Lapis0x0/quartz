@@ -11,18 +11,26 @@
     "type": "git",
     "url": "https://github.com/jackyzha0/quartz.git"
   },
+
   "scripts": {
     "quartz": "./quartz/bootstrap-cli.mjs",
     "docs": "npx quartz build --serve -d docs",
     "check": "tsc --noEmit && npx prettier . --check",
     "format": "npx prettier . --write",
     "test": "tsx --test",
-    "profile": "0x -D prof ./quartz/bootstrap-cli.mjs build --concurrency=1"
+    "profile": "0x -D prof ./quartz/bootstrap-cli.mjs build --concurrency=1",
+
+    "copy-reports": "mkdir -p public/reports && cp -r reports/* public/reports/",
+    "build": "npm run quartz-build-and-copy",
+
+    "quartz-build-and-copy": "npx quartz build && npm run copy-reports"
   },
+
   "engines": {
     "npm": ">=10.9.2",
     "node": ">=22"
   },
+
   "keywords": [
     "site generator",
     "ssg",
@@ -31,9 +39,11 @@
     "blog",
     "quartz"
   ],
+
   "bin": {
     "quartz": "./quartz/bootstrap-cli.mjs"
   },
+
   "dependencies": {
     "@clack/prompts": "^0.11.0",
     "@floating-ui/dom": "^1.7.0",
