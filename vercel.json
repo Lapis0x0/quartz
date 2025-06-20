@@ -4,7 +4,13 @@
   "trailingSlash": false,
   "rewrites": [
     {
-      "source": "/:path((?:[^/]+/)*[^./]+)",
+      "source": "/:path+",
+      "missing": [
+        {
+          "type": "path",
+          "value": ".*\\..{2,5}$"
+        }
+      ],
       "destination": "/:path.html"
     }
   ]
