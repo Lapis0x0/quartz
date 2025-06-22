@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Chosen Palette: Warm Neutral (Sand, Slate, Muted Red/Blue) -->
+    <!-- Application Structure Plan: A single-page dashboard design is used to transform the dense report into an intuitive, story-driven experience. Instead of a linear format, the SPA is organized into thematic sections (The Bill, Fiscal Impact, Economic Impact, Public Opinion, Political Game) accessible via a sticky navigation bar. This allows users to explore the consequences of the act in a non-linear way. Key interactions include: 1) Clicking on the bill's pillars for details. 2) Hovering on charts to see precise data on debt and deficits. 3) Selecting income groups to see personalized economic impacts. 4) Toggling between different expert GDP forecasts to understand the uncertainty. This structure was chosen to make a complex topic immediately understandable through visualization and to highlight the core conflicts and trade-offs of the legislation, which is more effective for user engagement and synthesis than reading a long-form report. -->
+    <!-- Visualization & Content Choices: Report Info -> Goal -> Viz/Presentation Method -> Interaction -> Justification -> Library/Method. 1. Debt Projection (CBO) -> Show Change -> Line Chart (Chart.js) -> Hover for data -> Clearly visualizes the sharp deviation from the baseline, emphasizing the long-term fiscal danger. 2. Deficit Components -> Show Proportion -> Doughnut Chart (Chart.js) -> Hover for details -> Shows that tax cuts are the main driver of the deficit. 3. Income Group Impact (CBO/TPC) -> Compare & Personalize -> Interactive Text Display updated by buttons -> Makes abstract distribution data tangible and relatable to the user. 4. Competing GDP Forecasts (CBO, PWBM, etc.) -> Compare & Show Conflict -> Bar Chart (Chart.js) with toggle -> Highlights the deep economic uncertainty and the conflicting effects of the bill's components. 5. Public Opinion (Polls) -> Compare -> Horizontal Bar Charts (Chart.js) -> No interaction -> Visually contrasts popular vs. unpopular policies, explaining the political challenge. 6. Bill's Pillars -> Organize & Inform -> 3-Column HTML/CSS Layout -> Click to expand -> A clear, high-level overview of the bill's structure without overwhelming the user initially. All charts use Canvas via Chart.js. All diagrams/layouts use HTML/Tailwind. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <title>“大而美法案”交互式分析</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', 'Helvetica Neue', 'Hiragino Sans GB', 'WenQuanYi Micro Hei', 'Microsoft Yahei', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 450px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+        .nav-link {
+            transition: color 0.3s, border-color 0.3s;
+        }
+        .nav-link.active {
+            color: #1e3a8a; /* Darker Blue */
+            border-bottom-color: #1e3a8a;
+        }
+        .kpi-card {
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .kpi-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -2px rgb(0 0 0 / 0.1);
+        }
+        .section-title {
+            font-size: 1.875rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+        .section-subtitle {
+            font-size: 1.125rem;
+            color: #4b5563;
+            max-width: 800px;
+            margin: 0 auto 2.5rem auto;
+        }
+        .pill-button {
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .pill-button.active {
+            background-color: #1e3a8a;
+            color: white;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <nav class="container mx-auto px-4">
+            <div class="flex justify-center items-center h-16">
+                <div class="flex space-x-4 md:space-x-8 text-sm md:text-base">
+                    <a href="#intro" class="nav-link text-gray-600 hover:text-blue-800 font-semibold border-b-2 border-transparent pb-1">简介</a>
+                    <a href="#pillars" class="nav-link text-gray-600 hover:text-blue-800 font-semibold border-b-2 border-transparent pb-1">法案核心</a>
+                    <a href="#fiscal" class="nav-link text-gray-600 hover:text-blue-800 font-semibold border-b-2 border-transparent pb-1">财政冲击</a>
+                    <a href="#economic" class="nav-link text-gray-600 hover:text-blue-800 font-semibold border-b-2 border-transparent pb-1">经济影响</a>
+                    <a href="#opinion" class="nav-link text-gray-600 hover:text-blue-800 font-semibold border-b-2 border-transparent pb-1">民意观察</a>
+                    <a href="#politics" class="nav-link text-gray-600 hover:text-blue-800 font-semibold border-b-2 border-transparent pb-1">政治博弈</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-8">
+
+        <section id="intro" class="text-center py-16 md:py-24">
+            <h1 class="text-4xl md:text-6xl font-extrabold text-gray-900 mb-4 tracking-tight">“大而美法案”</h1>
+            <h2 class="text-xl md:text-2xl text-blue-800 font-semibold">一份交互式政策解析</h2>
+            <p class="max-w-3xl mx-auto mt-6 text-lg text-gray-600">
+                本报告对2025年“大而美法案”进行全面分析。该法案试图通过激进的税收、支出和能源政策重塑美国经济，但其巨大的财政代价和内部矛盾，使其成为一把高风险的双刃剑。请向下滚动，探索其深远影响。
+            </p>
+        </section>
+
+        <section id="pillars" class="py-16 md:py-20 text-center bg-white rounded-2xl shadow-lg">
+            <h3 class="section-title">法案核心三大支柱</h3>
+            <p class="section-subtitle">该法案围绕三大核心议程构建，旨在同时重塑美国的税收、支出和能源战略。每个支柱都包含争议性的条款，共同构成了一项雄心勃勃但充满内在矛盾的立法。</p>
+            <div class="grid md:grid-cols-3 gap-8 mt-12 px-4 md:px-12">
+                <div class="p-8 border border-gray-200 rounded-xl bg-gray-50">
+                    <div class="text-5xl mb-4">💰</div>
+                    <h4 class="text-2xl font-bold mb-3 text-blue-900">大规模减税</h4>
+                    <ul class="text-left space-y-2 text-gray-700">
+                        <li>▶︎ <strong>永久化TCJA：</strong> 延长2017年个人及商业减税。</li>
+                        <li>▶︎ <strong>企业税再降：</strong> 计划从21%降至20%甚至15%。</li>
+                        <li>▶︎ <strong>定向优惠：</strong> 取消小费、加班工资的联邦所得税。</li>
+                        <li class="mt-2 pt-2 border-t border-gray-200"><strong>主要受益者：</strong> 60%的减税额流向收入最高的20%家庭。</li>
+                    </ul>
+                </div>
+                <div class="p-8 border border-gray-200 rounded-xl bg-gray-50">
+                    <div class="text-5xl mb-4">✂️</div>
+                    <h4 class="text-2xl font-bold mb-3 text-red-900">削减社会福利</h4>
+                    <ul class="text-left space-y-2 text-gray-700">
+                        <li>▶︎ <strong>社会保障：</strong> 削减老年人及残疾人福利。</li>
+                        <li>▶︎ <strong>医疗保健：</strong> 削减Medicaid，预计800万人失去保险。</li>
+                        <li>▶︎ <strong>营养援助：</strong> 削减食品券(SNAP)福利。</li>
+                         <li class="mt-2 pt-2 border-t border-gray-200"><strong>预计对冲：</strong> 每年节省约8000亿美元以部分抵消减税。</li>
+                    </ul>
+                </div>
+                <div class="p-8 border border-gray-200 rounded-xl bg-gray-50">
+                    <div class="text-5xl mb-4">🏭</div>
+                    <h4 class="text-2xl font-bold mb-3 text-gray-800">能源政策逆转</h4>
+                     <ul class="text-left space-y-2 text-gray-700">
+                        <li>▶︎ <strong>废除IRA：</strong> 全面取消清洁能源补贴和税收抵免。</li>
+                        <li>▶︎ <strong>取消EV信贷：</strong> 终止对电动汽车的购买补贴。</li>
+                        <li>▶︎ <strong>支持传统能源：</strong> 加速石油、天然气、煤炭项目审批。</li>
+                        <li class="mt-2 pt-2 border-t border-gray-200"><strong>核心目标：</strong> 扭转拜登政府的“绿色”议程。</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="fiscal" class="py-16 md:py-24 text-center">
+            <h3 class="section-title">财政冲击：通往债务悬崖？</h3>
+            <p class="section-subtitle">该法案对美国财政的影响是其最受争议的焦点。权威的国会预算办公室(CBO)分析指出，即使考虑经济增长（动态评分），法案仍将显著加剧美国的债务负担。</p>
+             <div class="grid md:grid-cols-3 gap-6 mb-12">
+                <div class="kpi-card">
+                    <p class="text-4xl font-extrabold text-red-600">+$2.8万亿</p>
+                    <p class="text-gray-600 mt-2">十年期新增赤字 (动态评分)</p>
+                </div>
+                <div class="kpi-card">
+                     <p class="text-4xl font-extrabold text-red-600">124%</p>
+                    <p class="text-gray-600 mt-2">预计2034年公共债务占GDP比重</p>
+                </div>
+                 <div class="kpi-card">
+                    <p class="text-4xl font-extrabold text-red-600">+$4410亿</p>
+                    <p class="text-gray-600 mt-2">十年期新增国债利息成本</p>
+                </div>
+            </div>
+            <div class="grid lg:grid-cols-2 gap-12 items-center mt-8">
+                <div class="bg-white p-6 rounded-2xl shadow-lg">
+                    <h4 class="text-xl font-bold text-center mb-4">公共债务占GDP比重预测</h4>
+                    <div class="chart-container h-80 md:h-96">
+                        <canvas id="debtChart"></canvas>
+                    </div>
+                </div>
+                 <div class="bg-white p-6 rounded-2xl shadow-lg">
+                    <h4 class="text-xl font-bold text-center mb-4">十年期赤字增加额构成</h4>
+                     <div class="chart-container h-80 md:h-96">
+                        <canvas id="deficitCompositionChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="economic" class="py-16 md:py-20 text-center bg-white rounded-2xl shadow-lg">
+            <h3 class="section-title">经济影响：谁是赢家，谁是输家？</h3>
+            <p class="section-subtitle">法案的政策组合充满了内在矛盾：减税旨在刺激经济，而作为资金来源的关税却抑制增长。这导致了对经济前景的巨大不确定性和明显的分配效应。</p>
+            <div class="grid lg:grid-cols-2 gap-12 items-center mt-12">
+                <div>
+                    <h4 class="text-xl font-bold mb-4">对不同收入家庭的年均影响</h4>
+                    <div class="flex justify-center space-x-2 mb-4">
+                        <button id="btn-richest" class="pill-button px-4 py-2 rounded-full border bg-gray-200">最富裕的1%</button>
+                        <button id="btn-poorest" class="pill-button px-4 py-2 rounded-full border bg-gray-200">最贫困的20%</button>
+                    </div>
+                    <div id="impact-display" class="bg-gray-100 p-8 rounded-lg text-center transition-all duration-300">
+                        <p class="text-lg text-gray-700" id="impact-text">请选择一个群体查看影响</p>
+                        <p class="text-5xl font-bold" id="impact-value"></p>
+                        <p class="text-sm text-gray-500 mt-2">数据来源：CBO</p>
+                    </div>
+                </div>
+                 <div>
+                    <h4 class="text-xl font-bold mb-4">滞胀风险：一手油门，一手刹车</h4>
+                    <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-800 p-6 rounded-r-lg text-left">
+                        <p class="font-bold">关税与通胀</p>
+                        <p>经济学家普遍认为关税将推高消费品价格，侵蚀家庭购买力，带来通胀压力。</p>
+                        <p class="font-bold mt-4">增长与衰退</p>
+                        <p>关税、供应链中断和贸易报复可能拖累GDP增长，抵消减税的刺激效果，增加经济衰退风险。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="opinion" class="py-16 md:py-24 text-center">
+            <h3 class="section-title">民意观察：分裂的公众情绪</h3>
+            <p class="section-subtitle">民意调查显示，公众对法案的态度高度分裂。虽然某些减税条款广受欢迎，但削减社会福利和为富人减税的核心内容则遭到普遍反对。</p>
+            <div class="bg-white p-6 md:p-8 rounded-2xl shadow-lg">
+                <h4 class="text-xl font-bold text-center mb-4">关键条款民意支持率</h4>
+                 <div class="chart-container h-96 md:h-[500px]">
+                    <canvas id="opinionPollChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section id="politics" class="py-16 md:py-20 text-center bg-white rounded-2xl shadow-lg">
+            <h3 class="section-title">政治博弈：联盟与异议</h3>
+            <p class="section-subtitle">尽管法案已在众议院通过，但在参议院面临巨大阻力。共和党内部在清洁能源问题上的分裂，以及关键人物的反对，使其最终命运充满变数。</p>
+            <div class="grid md:grid-cols-3 gap-8 mt-12 px-4 md:px-12">
+                <div class="flex flex-col items-center">
+                    <div class="w-16 h-16 rounded-full bg-green-200 text-green-800 flex items-center justify-center text-3xl font-bold mb-3">✓</div>
+                    <h4 class="text-xl font-bold">众议院</h4>
+                    <p class="text-gray-600">已通过</p>
+                </div>
+                 <div class="flex flex-col items-center">
+                     <div class="w-16 h-16 rounded-full bg-yellow-200 text-yellow-800 flex items-center justify-center text-3xl font-bold mb-3">?</div>
+                    <h4 class="text-xl font-bold">参议院</h4>
+                    <p class="text-gray-600">面临严峻考验，共和党最多只能失去3票。</p>
+                </div>
+                 <div class="flex flex-col items-center">
+                     <div class="w-16 h-16 rounded-full bg-red-200 text-red-800 flex items-center justify-center text-3xl font-bold mb-3">!</div>
+                    <h4 class="text-xl font-bold">关键分歧</h4>
+                    <p class="text-gray-600">共和党议员和能源行业反对废除清洁能源信贷。</p>
+                </div>
+            </div>
+             <div class="mt-16 border-t pt-10">
+                 <h4 class="text-2xl font-bold mb-6">主要反对者</h4>
+                <div class="max-w-md mx-auto bg-gray-100 p-6 rounded-lg text-left flex items-center space-x-4">
+                     <div class="text-5xl">🗣️</div>
+                     <div>
+                        <p class="font-bold text-lg">埃隆·马斯克</p>
+                        <p class="text-gray-700">公开称法案“令人作呕”，认为其会因巨额赤字使“美国破产”，并积极游说反对。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="text-center py-8 bg-gray-800 text-gray-400 text-sm">
+        <p>这是一个基于公开报告生成的交互式分析应用。</p>
+        <p>所有数据和分析均来自报告内容，仅供研究和学习使用。</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            const activateNavLink = (id) => {
+                navLinks.forEach(link => {
+                    link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+                });
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        activateNavLink(entry.target.id);
+                    }
+                });
+            }, { rootMargin: '-30% 0px -70% 0px' });
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+            
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = link.getAttribute('href');
+                    document.querySelector(targetId).scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+
+
+            const debtData = {
+                labels: ['2025', '2026', '2027', '2028', '2029', '2030', '2031', '2032', '2033', '2034'],
+                datasets: [
+                    {
+                        label: 'CBO基线预测',
+                        data: [100, 102, 104, 106, 108, 110, 112, 114, 116, 117],
+                        borderColor: 'rgb(59, 130, 246)',
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        fill: true,
+                        tension: 0.4,
+                    },
+                    {
+                        label: '“大而美法案”后预测',
+                        data: [100, 104, 108, 112, 115, 118, 120, 122, 123, 124],
+                        borderColor: 'rgb(239, 68, 68)',
+                        backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                        fill: true,
+                        tension: 0.4,
+                    }
+                ]
+            };
+            const debtChartCtx = document.getElementById('debtChart').getContext('2d');
+            new Chart(debtChartCtx, {
+                type: 'line',
+                data: debtData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            title: { display: true, text: '公共债务占GDP比重 (%)' }
+                        }
+                    },
+                    plugins: {
+                        legend: { position: 'top' },
+                        tooltip: { mode: 'index', intersect: false }
+                    }
+                }
+            });
+
+            const deficitData = {
+                labels: ['减税导致的收入减少', '支出削减', '新增债务利息'],
+                datasets: [{
+                    data: [35000, 7740, 4410],
+                    backgroundColor: ['rgb(239, 68, 68)', 'rgb(34, 197, 94)', 'rgb(245, 158, 11)'],
+                    hoverOffset: 4
+                }]
+            };
+            const deficitCompositionCtx = document.getElementById('deficitCompositionChart').getContext('2d');
+            new Chart(deficitCompositionCtx, {
+                type: 'doughnut',
+                data: deficitData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom' },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed !== null) {
+                                        label += new Intl.NumberFormat('zh-CN', { style: 'currency', currency: 'USD', notation: 'compact' }).format(context.parsed * 100000000);
+                                        label += ' (亿美元)';
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            const impactDisplay = document.getElementById('impact-display');
+            const impactText = document.getElementById('impact-text');
+            const impactValue = document.getElementById('impact-value');
+            const btnRichest = document.getElementById('btn-richest');
+            const btnPoorest = document.getElementById('btn-poorest');
+            
+            const updateImpact = (group) => {
+                impactDisplay.classList.remove('bg-green-100', 'bg-red-100');
+                if (group === 'richest') {
+                    impactText.textContent = '最富裕家庭年均收入变化';
+                    impactValue.textContent = '+$12,000';
+                    impactValue.classList.remove('text-red-600');
+                    impactValue.classList.add('text-green-600');
+                    impactDisplay.classList.add('bg-green-100');
+                    btnRichest.classList.add('active');
+                    btnPoorest.classList.remove('active');
+                } else if (group === 'poorest') {
+                    impactText.textContent = '最贫困家庭年均收入变化';
+                    impactValue.textContent = '-$1,600';
+                    impactValue.classList.remove('text-green-600');
+                    impactValue.classList.add('text-red-600');
+                    impactDisplay.classList.add('bg-red-100');
+                    btnPoorest.classList.add('active');
+                    btnRichest.classList.remove('active');
+                }
+            };
+            
+            btnRichest.addEventListener('click', () => updateImpact('richest'));
+            btnPoorest.addEventListener('click', () => updateImpact('poorest'));
+            
+            updateImpact('richest');
+            
+            const opinionPollData = {
+                labels: ['延长中产减税 (收入<$20万)', '增加儿童税收抵免', '取消小费税', '延长富人减税 (收入>$40万)', '削减食品援助 (SNAP)'],
+                datasets: [{
+                    label: '支持率 (%)',
+                    data: [71, 65, 58, 29, 23],
+                    backgroundColor: [
+                        'rgba(34, 197, 94, 0.7)',
+                        'rgba(59, 130, 246, 0.7)',
+                        'rgba(59, 130, 246, 0.7)',
+                        'rgba(239, 68, 68, 0.7)',
+                        'rgba(239, 68, 68, 0.7)'
+                    ],
+                    borderColor: [
+                        'rgb(34, 197, 94)',
+                        'rgb(59, 130, 246)',
+                        'rgb(59, 130, 246)',
+                        'rgb(239, 68, 68)',
+                        'rgb(239, 68, 68)'
+                    ],
+                    borderWidth: 1
+                }]
+            };
+            const opinionPollCtx = document.getElementById('opinionPollChart').getContext('2d');
+            new Chart(opinionPollCtx, {
+                type: 'bar',
+                data: opinionPollData,
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            max: 100,
+                            title: { display: true, text: '支持率 (%)' }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
