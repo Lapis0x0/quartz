@@ -29,8 +29,10 @@ jobs:
           coscli-version: 'v0.12.0-beta'             # 指定具体版本号而非 latest
 
       # 3️⃣ 从 COS 下载到本地 content/（保持完全一致，但保留 .gitkeep）
-      - name: 拉取 COS 文件到 content/
+      - name: 拉取 COS 文件
         run: |
+          # --- 同步数字花园到 content/ ---
+          echo "开始同步数字花园..."
           # 您自定义的重要文件，需要备份和恢复
           mkdir -p /tmp/content_backup
           if [ -f "content/.gitkeep" ]; then
@@ -61,8 +63,19 @@ jobs:
           if [ ! -f "content/.gitkeep" ]; then
             touch content/.gitkeep
           fi
+          echo "数字花园同步完成 ✅"
+
+          # --- 同步报告到 reports/ ---
+          echo "开始同步报告..."
+          mkdir -p reports
+          coscli sync \
+            --thread-num 8 \
+            --recursive \
+            cos://${{ secrets.COS_BUCKET }}/Report/ \
+            reports/ \
+            -e cos.${{ secrets.COS_REGION }}.myqcloud.com
           
-          echo "COS 同步完成 ✅"
+          echo "报告同步完成 ✅"
 
       # 4️⃣ 若有变动就提交
       - name: Commit & push if changed
