@@ -1,9 +1,9 @@
 name: 同步COS到Obsidian仓库
 
 on:
-  # 每 23 小时自动同步一次（UTC 时间）
+  # 每天北京时间凌晨 3 点自动同步一次（UTC 时间 19:00）
   schedule:
-    - cron: '0 */23 * * *'
+    - cron: '0 19 * * *'
   # 允许手动触发
   workflow_dispatch:
 
