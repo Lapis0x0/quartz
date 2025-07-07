@@ -21,7 +21,7 @@ description: 记录金融·科技·随想
 
 ### 一、技术研究
 - [[闪电注意力的又一次胜利：Minimax-M1 技术报告浅读]]
-- [[TODO：使用Gemini-cli来整理Obsidian笔记]]
+- [[TODO：使用Gemini-cli来实现选定信源的自动新闻推送]]
 
 ### 二、脑神经科学&心理学
 - [[还原主义]]
