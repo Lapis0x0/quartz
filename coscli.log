@@ -3215,3 +3215,48 @@
 [36mINFO[0m[2025-07-09 19:09:10] Sync skip download, localPath:/home/runner/work/quartz/quartz/reports/以伊冲突速览.html, cosPath:Report/以伊冲突速览.html 
 [36mINFO[0m[2025-07-09 19:09:10] Sync skip download, localPath:/home/runner/work/quartz/quartz/reports/伊朗结构.html, cosPath:Report/伊朗结构.html 
 [36mINFO[0m[2025-07-09 19:09:10] Sync skip download, localPath:/home/runner/work/quartz/quartz/reports/大而美法案.html, cosPath:Report/大而美法案.html 
+[36mINFO[0m[2025-07-10 19:07:57] Download cos://obisidian-1302893975/0.数字花园/index.md => /home/runner/work/quartz/quartz/content/index.md 
+[36mINFO[0m[2025-07-10 19:07:58] Download cos://obisidian-1302893975/0.数字花园/亚文化研究/为什么少女乐队可以成为新的显学.md => /home/runner/work/quartz/quartz/content/亚文化研究/为什么少女乐队可以成为新的显学.md 
+[36mINFO[0m[2025-07-10 19:07:58] Download cos://obisidian-1302893975/0.数字花园/亚文化研究/文化母题.md => /home/runner/work/quartz/quartz/content/亚文化研究/文化母题.md 
+[36mINFO[0m[2025-07-10 19:07:59] Download cos://obisidian-1302893975/0.数字花园/宗教研究/基督教历史/TODO：宗教研究 02｜上帝的归上帝，凯撒的也归上帝.md => /home/runner/work/quartz/quartz/content/宗教研究/基督教历史/TODO：宗教研究 02｜上帝的归上帝，凯撒的也归上帝.md 
+[36mINFO[0m[2025-07-10 19:07:59] Download cos://obisidian-1302893975/0.数字花园/宗教研究/基督教历史/宗教研究 01｜制度大于真理：早期基督教的边界建构.md => /home/runner/work/quartz/quartz/content/宗教研究/基督教历史/宗教研究 01｜制度大于真理：早期基督教的边界建构.md 
+[36mINFO[0m[2025-07-10 19:08:00] Download cos://obisidian-1302893975/0.数字花园/技术研究/TODO：使用Gemini-cli来实现选定信源的自动新闻推送.md => /home/runner/work/quartz/quartz/content/技术研究/TODO：使用Gemini-cli来实现选定信源的自动新闻推送.md 
+[36mINFO[0m[2025-07-10 19:08:01] Download cos://obisidian-1302893975/0.数字花园/技术研究/闪电注意力的又一次胜利：Minimax-M1 技术报告浅读.md => /home/runner/work/quartz/quartz/content/技术研究/闪电注意力的又一次胜利：Minimax-M1 技术报告浅读.md 
+[36mINFO[0m[2025-07-10 19:08:01] Download cos://obisidian-1302893975/0.数字花园/投资/0.投资反思/20250614 时间推演机制，与灰犀牛.md => /home/runner/work/quartz/quartz/content/投资/0.投资反思/20250614 时间推演机制，与灰犀牛.md 
+[36mINFO[0m[2025-07-10 19:08:02] Download cos://obisidian-1302893975/0.数字花园/投资/0.投资反思/20250620 IP超短线投资 盈利反思.md => /home/runner/work/quartz/quartz/content/投资/0.投资反思/20250620 IP超短线投资 盈利反思.md 
+[36mINFO[0m[2025-07-10 19:08:02] Download cos://obisidian-1302893975/0.数字花园/投资/0.投资反思/20250625 伊以冲突 交易反思.md => /home/runner/work/quartz/quartz/content/投资/0.投资反思/20250625 伊以冲突 交易反思.md 
+[36mINFO[0m[2025-07-10 19:08:03] Download cos://obisidian-1302893975/0.数字花园/投资/0.投资反思/20250625以伊冲突 交易反思与附属资料/1.冲突时间线与后续推演.md => /home/runner/work/quartz/quartz/content/投资/0.投资反思/20250625以伊冲突 交易反思与附属资料/1.冲突时间线与后续推演.md 
+[36mINFO[0m[2025-07-10 19:08:03] Download cos://obisidian-1302893975/0.数字花园/投资/0.投资反思/20250625以伊冲突 交易反思与附属资料/2.特朗普总统的态度.md => /home/runner/work/quartz/quartz/content/投资/0.投资反思/20250625以伊冲突 交易反思与附属资料/2.特朗普总统的态度.md 
+[36mINFO[0m[2025-07-10 19:08:04] Download cos://obisidian-1302893975/0.数字花园/投资/0.投资反思/20250625以伊冲突 交易反思与附属资料/伊以冲突梳理.md => /home/runner/work/quartz/quartz/content/投资/0.投资反思/20250625以伊冲突 交易反思与附属资料/伊以冲突梳理.md 
+[36mINFO[0m[2025-07-10 19:08:05] Download cos://obisidian-1302893975/0.数字花园/投资/0.投资反思/20250705 OM波段交易反思.md => /home/runner/work/quartz/quartz/content/投资/0.投资反思/20250705 OM波段交易反思.md 
+[36mINFO[0m[2025-07-10 19:08:05] Download cos://obisidian-1302893975/0.数字花园/投资/0.投资反思/交易员都在盲人摸象.md => /home/runner/work/quartz/quartz/content/投资/0.投资反思/交易员都在盲人摸象.md 
+[36mINFO[0m[2025-07-10 19:08:06] Download cos://obisidian-1302893975/0.数字花园/投资/0.投资反思/叙事的博弈周期.md => /home/runner/work/quartz/quartz/content/投资/0.投资反思/叙事的博弈周期.md 
+[36mINFO[0m[2025-07-10 19:08:06] Download cos://obisidian-1302893975/0.数字花园/投资/0.投资反思/投资的 Alpha 与 Beta.md => /home/runner/work/quartz/quartz/content/投资/0.投资反思/投资的 Alpha 与 Beta.md 
+[36mINFO[0m[2025-07-10 19:08:07] Download cos://obisidian-1302893975/0.数字花园/投资/0.投资反思/杠杆.md => /home/runner/work/quartz/quartz/content/投资/0.投资反思/杠杆.md 
+[36mINFO[0m[2025-07-10 19:08:07] Download cos://obisidian-1302893975/0.数字花园/投资/0.投资反思/风险管理.md => /home/runner/work/quartz/quartz/content/投资/0.投资反思/风险管理.md 
+[36mINFO[0m[2025-07-10 19:08:08] Download cos://obisidian-1302893975/0.数字花园/投资/研究报告/TODO：美国与中国的灰犀牛.md => /home/runner/work/quartz/quartz/content/投资/研究报告/TODO：美国与中国的灰犀牛.md 
+[36mINFO[0m[2025-07-10 19:08:08] Download cos://obisidian-1302893975/0.数字花园/投资/研究报告/加密稳定币何以“减负”国家债务.md => /home/runner/work/quartz/quartz/content/投资/研究报告/加密稳定币何以“减负”国家债务.md 
+[36mINFO[0m[2025-07-10 19:08:09] Download cos://obisidian-1302893975/0.数字花园/投资/研究报告/大而美法案.md => /home/runner/work/quartz/quartz/content/投资/研究报告/大而美法案.md 
+[36mINFO[0m[2025-07-10 19:08:10] Download cos://obisidian-1302893975/0.数字花园/投资/研究报告/比特币技术基础、价值涌现机制与去中心化治理的不可约分性分析.md => /home/runner/work/quartz/quartz/content/投资/研究报告/比特币技术基础、价值涌现机制与去中心化治理的不可约分性分析.md 
+[36mINFO[0m[2025-07-10 19:08:10] Download cos://obisidian-1302893975/0.数字花园/投资/研究报告/钱从哪来，由谁决定：特朗普总统与美联储的权力博弈 & 兼论CBDC与稳定币.md => /home/runner/work/quartz/quartz/content/投资/研究报告/钱从哪来，由谁决定：特朗普总统与美联储的权力博弈 & 兼论CBDC与稳定币.md 
+[36mINFO[0m[2025-07-10 19:08:11] Download cos://obisidian-1302893975/0.数字花园/投资/金融学概念/OVX、GVZ、VVIX、SKEW指标.md => /home/runner/work/quartz/quartz/content/投资/金融学概念/OVX、GVZ、VVIX、SKEW指标.md 
+[36mINFO[0m[2025-07-10 19:08:11] Download cos://obisidian-1302893975/0.数字花园/投资/金融学概念/勒塔布与「杠铃策略」.md => /home/runner/work/quartz/quartz/content/投资/金融学概念/勒塔布与「杠铃策略」.md 
+[36mINFO[0m[2025-07-10 19:08:12] Download cos://obisidian-1302893975/0.数字花园/投资/金融学概念/左侧入场.md => /home/runner/work/quartz/quartz/content/投资/金融学概念/左侧入场.md 
+[36mINFO[0m[2025-07-10 19:08:12] Download cos://obisidian-1302893975/0.数字花园/投资/金融学概念/金融中的 β 系数.md => /home/runner/work/quartz/quartz/content/投资/金融学概念/金融中的 β 系数.md 
+[36mINFO[0m[2025-07-10 19:08:13] Download cos://obisidian-1302893975/0.数字花园/政治学/TODO：危机传播失范：公信力衰退是“现代病”还是常态？.md => /home/runner/work/quartz/quartz/content/政治学/TODO：危机传播失范：公信力衰退是“现代病”还是常态？.md 
+[36mINFO[0m[2025-07-10 19:08:13] Download cos://obisidian-1302893975/0.数字花园/政治学/TODO：基于福建小学慰问舆论事故看现代互联网传媒下科层官僚制部门的回应困境.md => /home/runner/work/quartz/quartz/content/政治学/TODO：基于福建小学慰问舆论事故看现代互联网传媒下科层官僚制部门的回应困境.md 
+[36mINFO[0m[2025-07-10 19:08:14] Download cos://obisidian-1302893975/0.数字花园/政治学/TODO：赛博巴尔干化：国家治理的性别悖论与身份认同战争.md => /home/runner/work/quartz/quartz/content/政治学/TODO：赛博巴尔干化：国家治理的性别悖论与身份认同战争.md 
+[36mINFO[0m[2025-07-10 19:08:15] Download cos://obisidian-1302893975/0.数字花园/社会学/人设、站队与真相：从海棠与“妈妈岗”议题看后现代传媒特性 & 兼论新闻事实核查工具.md => /home/runner/work/quartz/quartz/content/社会学/人设、站队与真相：从海棠与“妈妈岗”议题看后现代传媒特性 & 兼论新闻事实核查工具.md 
+[36mINFO[0m[2025-07-10 19:08:15] Download cos://obisidian-1302893975/0.数字花园/社会学/我们无法修好彼此：城市、疏离与机器人之梦.md => /home/runner/work/quartz/quartz/content/社会学/我们无法修好彼此：城市、疏离与机器人之梦.md 
+[36mINFO[0m[2025-07-10 19:08:16] Download cos://obisidian-1302893975/0.数字花园/社会学/捞女游戏舆论演变 与舆论场群体的经典三元结构.md => /home/runner/work/quartz/quartz/content/社会学/捞女游戏舆论演变 与舆论场群体的经典三元结构.md 
+[36mINFO[0m[2025-07-10 19:08:16] Download cos://obisidian-1302893975/0.数字花园/社会学/模型/身份-商品缠绕模型.md => /home/runner/work/quartz/quartz/content/社会学/模型/身份-商品缠绕模型.md 
+[36mINFO[0m[2025-07-10 19:08:17] Download cos://obisidian-1302893975/0.数字花园/社会学/辉格史观.md => /home/runner/work/quartz/quartz/content/社会学/辉格史观.md 
+[36mINFO[0m[2025-07-10 19:08:17] Download cos://obisidian-1302893975/0.数字花园/脑神经科学&心理学/双相/双相障碍（躁狂与抑郁）的脑神经与社会心理机制.md => /home/runner/work/quartz/quartz/content/脑神经科学&心理学/双相/双相障碍（躁狂与抑郁）的脑神经与社会心理机制.md 
+[36mINFO[0m[2025-07-10 19:08:18] Download cos://obisidian-1302893975/0.数字花园/脑神经科学&心理学/双相/奥氮平.md => /home/runner/work/quartz/quartz/content/脑神经科学&心理学/双相/奥氮平.md 
+[36mINFO[0m[2025-07-10 19:08:19] Download cos://obisidian-1302893975/0.数字花园/脑神经科学&心理学/双相/锂盐.md => /home/runner/work/quartz/quartz/content/脑神经科学&心理学/双相/锂盐.md 
+[36mINFO[0m[2025-07-10 19:08:19] Download cos://obisidian-1302893975/0.数字花园/脑神经科学&心理学/抑郁/再论米氮平.md => /home/runner/work/quartz/quartz/content/脑神经科学&心理学/抑郁/再论米氮平.md 
+[36mINFO[0m[2025-07-10 19:08:20] Download cos://obisidian-1302893975/0.数字花园/脑神经科学&心理学/还原主义.md => /home/runner/work/quartz/quartz/content/脑神经科学&心理学/还原主义.md 
+[36mINFO[0m[2025-07-10 19:08:20] Download cos://obisidian-1302893975/0.数字花园/脑神经科学&心理学/预测性加工.md => /home/runner/work/quartz/quartz/content/脑神经科学&心理学/预测性加工.md 
+[36mINFO[0m[2025-07-10 19:08:22] Sync skip download, localPath:/home/runner/work/quartz/quartz/reports/以伊冲突速览.html, cosPath:Report/以伊冲突速览.html 
+[36mINFO[0m[2025-07-10 19:08:22] Sync skip download, localPath:/home/runner/work/quartz/quartz/reports/伊朗结构.html, cosPath:Report/伊朗结构.html 
+[36mINFO[0m[2025-07-10 19:08:23] Sync skip download, localPath:/home/runner/work/quartz/quartz/reports/大而美法案.html, cosPath:Report/大而美法案.html 
